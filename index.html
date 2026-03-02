@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BE Pilot â Product Tour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',sans-serif;background:#fafafa;color:#1a1a2e;-webkit-font-smoothing:antialiased}
+:root{--blue:#1e3a5f;--orange:#f97316;--blue-light:#2d5490;--bg:#fafafa;--card:#ffffff;--border:#e5e7eb;--text:#1a1a2e;--muted:#6b7280;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--purple:#8b5cf6}
+
+/* âââ SCROLLBAR âââ */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#f1f1f1}
+::-webkit-scrollbar-thumb{background:#c4c4c4;border-radius:3px}
+
+/* âââ NAV âââ */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(250,250,250,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-weight:800;font-size:1.1rem;color:var(--blue);letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
+.nav-brand-dot{width:8px;height:8px;background:var(--orange);border-radius:50%;display:inline-block}
+.nav-steps{display:flex;gap:6px;align-items:center}
+.nav-btn{width:36px;height:36px;border-radius:50%;border:2px solid var(--border);background:transparent;font-size:0.8rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;text-decoration:none}
+.nav-btn:hover{border-color:var(--blue);color:var(--blue)}
+.nav-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+@media(max-width:600px){.nav-steps{gap:3px}.nav-btn{width:30px;height:30px;font-size:0.7rem}nav{padding:0 16px}}
+
+/* âââ HERO âââ */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 32px 80px;position:relative;overflow:hidden;background:linear-gradient(135deg,#f0f4f8 0%,#fafafa 50%,#fff7f0 100%)}
+.hero::before{content:'';position:absolute;top:-200px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(30,58,95,0.06) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(249,115,22,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:6px 16px;font-size:0.8rem;font-weight:600;color:var(--blue);margin-bottom:28px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.hero-badge-dot{width:6px;height:6px;background:var(--success);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero h1{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:900;color:var(--blue);letter-spacing:-0.04em;line-height:1.05;max-width:800px;margin-bottom:24px}
+.hero h1 span{color:var(--orange)}
+.hero-sub{font-size:clamp(1rem,2vw,1.25rem);color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:48px;font-weight:400}
+.hero-client{display:inline-flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 24px;box-shadow:0 4px 24px rgba(0,0,0,0.06)}
+.hero-client-avatar{width:40px;height:40px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.85rem}
+.hero-client-info{text-align:left}
+.hero-client-name{font-weight:700;font-size:0.9rem;color:var(--text)}
+.hero-client-role{font-size:0.78rem;color:var(--muted)}
+.hero-scroll{margin-top:64px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:0.8rem}
+.hero-scroll-arrow{width:32px;height:32px;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* âââ SECTION WRAPPER âââ */
+.tour-section{padding:120px 32px;position:relative;overflow:hidden}
+.tour-section:nth-child(even){background:#fff}
+.section-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.section-inner.reverse{direction:rtl}
+.section-inner.reverse>*{direction:ltr}
+.section-number{position:absolute;top:40px;left:32px;font-size:clamp(80px,15vw,180px);font-weight:900;color:rgba(30,58,95,0.04);letter-spacing:-0.05em;line-height:1;pointer-events:none;user-select:none;z-index:0}
+
+/* âââ EXPLANATION âââ */
+.explanation{position:relative;z-index:1}
+.screen-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.2);border-radius:100px;padding:4px 14px;font-size:0.75rem;font-weight:700;color:var(--orange);margin-bottom:20px;letter-spacing:0.05em;text-transform:uppercase}
+.explanation h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;color:var(--blue);line-height:1.2;letter-spacing:-0.03em;margin-bottom:16px}
+.explanation p{font-size:1rem;color:var(--muted);line-height:1.8;margin-bottom:24px}
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.feature-list li{display:flex;align-items:flex-start;gap:12px;font-size:0.9rem;color:var(--text)}
+.feature-list li::before{content:'â';width:22px;height:22px;background:rgba(16,185,129,0.12);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--success);flex-shrink:0;margin-top:1px}
+
+/* âââ APP WINDOW CHROME âââ */
+.app-window{background:#fff;border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,0.15),0 4px 16px rgba(0,0,0,0.06);overflow:hidden;position:relative;z-index:1}
+.window-bar{background:#f5f5f5;padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e5e7eb}
+.dot{width:12px;height:12px;border-radius:50%}
+.dot-r{background:#ff5f57}
+.dot-y{background:#febc2e}
+.dot-g{background:#28c840}
+.window-bar-title{flex:1;text-align:center;font-size:0.75rem;color:#999;font-weight:500;margin-right:32px}
+
+/* âââ SCREEN 1: DASHBOARD âââ */
+.dashboard-wrap{background:#1a1f2e;border-radius:0 0 16px 16px;display:flex;min-height:420px;overflow:hidden}
+.sidebar{width:200px;background:#141824;padding:20px 0;display:flex;flex-direction:column;flex-shrink:0;border-right:1px solid rgba(255,255,255,0.06)}
+.sidebar-logo{padding:0 20px 24px;font-size:1rem;font-weight:800;color:#fff;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
+.sidebar-logo-icon{width:28px;height:28px;background:var(--orange);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:900;color:#fff}
+.sidebar-nav{display:flex;flex-direction:column;gap:2px;padding:0 8px}
+.snav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:0.78rem;color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.15s}
+.snav-item:hover{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.8)}
+.snav-item.active{background:rgba(255,255,255,0.1);color:#fff}
+.snav-icon{font-size:1rem;width:20px;text-align:center}
+.dash-main{flex:1;padding:20px;overflow:hidden}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.dash-title{font-size:0.95rem;font-weight:700;color:#fff}
+.dash-date{font-size:0.72rem;color:rgba(255,255,255,0.4)}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.kpi-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px;transition:all 0.2s}
+.kpi-card:hover{background:rgba(255,255,255,0.08)}
+.kpi-label{font-size:0.65rem;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.kpi-value{font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:-0.02em}
+.kpi-sub{font-size:0.63rem;color:rgba(255,255,255,0.35);margin-top:2px}
+.kpi-card.orange{border-color:rgba(249,115,22,0.3);background:rgba(249,115,22,0.08)}
+.kpi-card.orange .kpi-value{color:#f97316}
+.kpi-card.green{border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.08)}
+.kpi-card.green .kpi-value{color:#10b981}
+.kpi-card.yellow{border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.08)}
+.kpi-card.yellow .kpi-value{color:#f59e0b}
+.proj-list-title{font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+.proj-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.proj-row:last-child{border-bottom:none}
+.proj-name{font-size:0.72rem;color:rgba(255,255,255,0.8);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-bar-wrap{width:80px;height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;flex-shrink:0}
+.proj-bar{height:100%;border-radius:3px}
+.proj-pct{font-size:0.65rem;color:rgba(255,255,255,0.4);width:30px;text-align:right;flex-shrink:0}
+.alert-banner{margin-top:12px;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.3);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px}
+.alert-icon{font-size:0.9rem}
+.alert-text{font-size:0.65rem;color:rgba(249,115,22,0.9);line-height:1.4;flex:1}
+.alert-badge{background:#f97316;color:#fff;font-size:0.6rem;font-weight:700;padding:2px 8px;border-radius:100px;flex-shrink:0;white-space:nowrap}
+
+/* âââ SCREEN 2: PROJECT DETAIL âââ */
+.proj-detail-wrap{background:#f8fafc;border-radius:0 0 16px 16px;min-height:420px;overflow:hidden}
+.proj-detail-header{background:#fff;padding:16px 20px;border-bottom:1px solid #e5e7eb}
+.pdh-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:12px}
+.pdh-title{font-size:0.95rem;font-weight:800;color:var(--blue);line-height:1.3}
+.pdh-budget{font-size:0.8rem;font-weight:700;color:var(--orange)}
+.badge-green{background:rgba(16,185,129,0.12);color:#059669;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:100px;border:1px solid rgba(16,185,129,0.25);white-space:nowrap}
+.badge-blue{background:rgba(30,58,95,0.08);color:var(--blue);font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:100px;white-space:nowrap}
+.tab-bar{display:flex;gap:0;border-bottom:1px solid #e5e7eb;background:#fff}
+.tab{padding:10px 14px;font-size:0.75rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.proj-detail-body{padding:16px 20px}
+.prog-section{margin-bottom:16px}
+.prog-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.prog-label{font-size:0.75rem;font-weight:600;color:var(--text)}
+.prog-pct{font-size:0.75rem;font-weight:700;color:var(--blue)}
+.prog-bar-outer{background:#e5e7eb;border-radius:100px;height:8px;overflow:hidden}
+.prog-bar-inner{height:100%;background:linear-gradient(90deg,var(--blue),#4a7fcb);border-radius:100px}
+.task-list{display:flex;flex-direction:column;gap:8px}
+.task-item{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#fff;border-radius:10px;border:1px solid #e5e7eb;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.task-status{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0}
+.ts-done{background:rgba(16,185,129,0.12);color:#059669}
+.ts-prog{background:rgba(59,130,246,0.12);color:#2563eb}
+.ts-wait{background:rgba(107,114,128,0.1);color:#9ca3af}
+.task-name{font-size:0.78rem;font-weight:600;color:var(--text);flex:1}
+.task-date{font-size:0.68rem;color:var(--muted)}
+.task-assign{font-size:0.65rem;background:#f3f4f6;color:var(--muted);padding:2px 8px;border-radius:100px;white-space:nowrap}
+
+/* âââ SCREEN 3: PLANNING âââ */
+.planning-wrap{background:#f8fafc;border-radius:0 0 16px 16px;min-height:380px;overflow:hidden}
+.planning-header{background:#fff;padding:12px 16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between}
+.planning-title{font-size:0.85rem;font-weight:700;color:var(--blue)}
+.planning-week{font-size:0.72rem;color:var(--muted)}
+.planning-grid{overflow-x:auto}
+.pg-table{min-width:600px;width:100%}
+.pg-head{display:grid;grid-template-columns:90px repeat(5,1fr);background:#fff;border-bottom:1px solid #e5e7eb}
+.pg-head-cell{padding:8px 6px;font-size:0.68rem;font-weight:700;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:0.05em}
+.pg-head-cell:first-child{text-align:left;padding-left:12px}
+.pg-row{display:grid;grid-template-columns:90px repeat(5,1fr);border-bottom:1px solid #f0f0f0;min-height:52px}
+.pg-row:last-child{border-bottom:none}
+.pg-tech{padding:8px 12px;display:flex;align-items:center;gap:8px;background:#fff;border-right:1px solid #f0f0f0}
+.tech-avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:800;color:#fff;flex-shrink:0}
+.tech-name{font-size:0.68rem;font-weight:600;color:var(--text)}
+.pg-cell{padding:4px 3px;display:flex;align-items:stretch;position:relative}
+.task-block{border-radius:6px;padding:4px 7px;font-size:0.6rem;font-weight:600;line-height:1.35;width:100%;display:flex;flex-direction:column;justify-content:center}
+.tb-blue{background:rgba(37,99,235,0.12);color:#1d4ed8;border-left:3px solid #2563eb}
+.tb-red{background:rgba(239,68,68,0.12);color:#b91c1c;border-left:3px solid #ef4444}
+.tb-green{background:rgba(16,185,129,0.12);color:#047857;border-left:3px solid #10b981}
+.tb-purple{background:rgba(139,92,246,0.12);color:#6d28d9;border-left:3px solid #8b5cf6}
+.tb-orange{background:rgba(249,115,22,0.12);color:#c2410c;border-left:3px solid #f97316}
+.planning-legend{padding:10px 12px;background:#fff;border-top:1px solid #e5e7eb;display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:0.65rem;color:var(--muted)}
+.legend-dot{width:8px;height:8px;border-radius:2px}
+
+/* âââ SCREEN 4: SAV âââ */
+.sav-wrap{background:#f8fafc;border-radius:0 0 16px 16px;min-height:400px;overflow:hidden;padding:0}
+.sav-header{background:#fff;padding:14px 20px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between}
+.sav-title{font-size:0.88rem;font-weight:700;color:var(--blue)}
+.sav-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:0.72rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.sav-body{padding:16px 20px}
+.alert-card-red{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px}
+.alert-icon-big{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.alert-card-body{flex:1}
+.acb-title{font-size:0.82rem;font-weight:700;color:#b91c1c;margin-bottom:4px}
+.acb-sub{font-size:0.72rem;color:#ef4444;margin-bottom:8px;line-height:1.5}
+.acb-badge{display:inline-flex;align-items:center;gap:5px;background:#ef4444;color:#fff;font-size:0.65rem;font-weight:700;padding:3px 10px;border-radius:100px}
+.interv-list{margin-bottom:16px}
+.interv-title{font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+.interv-item{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#fff;border-radius:10px;border:1px solid #e5e7eb;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sd-green{background:#10b981}
+.sd-yellow{background:#f59e0b}
+.sd-red{background:#ef4444}
+.interv-info{flex:1}
+.interv-name{font-size:0.75rem;font-weight:600;color:var(--text)}
+.interv-meta{font-size:0.65rem;color:var(--muted)}
+.equip-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.equip-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.equip-name{font-size:0.8rem;font-weight:700;color:var(--blue)}
+.equip-badge{background:rgba(30,58,95,0.08);color:var(--blue);font-size:0.62rem;font-weight:700;padding:2px 8px;border-radius:100px}
+.equip-meta{font-size:0.7rem;color:var(--muted);line-height:1.6}
+.gen-btn{display:flex;align-items:center;gap:8px;background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px 18px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;width:100%}
+
+/* âââ SCREEN 5: FINANCIER âââ */
+.fin-wrap{background:#fff;border-radius:0 0 16px 16px;overflow:hidden}
+.fin-header{padding:14px 20px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between}
+.fin-title{font-size:0.88rem;font-weight:700;color:var(--blue)}
+.fin-table{width:100%;border-collapse:collapse}
+.fin-table th{font-size:0.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;padding:8px 12px;text-align:left;border-bottom:1px solid #e5e7eb;background:#f9fafb}
+.fin-table td{font-size:0.75rem;padding:10px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+.fin-table tr:last-child td{border-bottom:none}
+.fin-table tr:hover td{background:#fafafa}
+.fin-proj-name{font-weight:700;color:var(--text)}
+.fin-amount{font-weight:600;color:var(--text)}
+.fin-billed{color:#2563eb;font-weight:600}
+.fin-remaining{color:#f97316;font-weight:600}
+.fin-margin{font-weight:700}
+.margin-green{color:#059669}
+.margin-ok{color:#2563eb}
+.status-icon{font-size:0.9rem}
+.fin-footer{background:var(--blue);padding:12px 20px;display:grid;grid-template-columns:repeat(3,1fr)}
+.fin-foot-item{text-align:center}
+.fin-foot-label{font-size:0.62rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px}
+.fin-foot-val{font-size:0.95rem;font-weight:800;color:#fff;letter-spacing:-0.02em}
+.fin-foot-val.orange{color:#f97316}
+
+/* âââ SCREEN 6: JOURNAL âââ */
+.journal-wrap{background:#f8fafc;border-radius:0 0 16px 16px;min-height:400px;display:flex;flex-direction:column}
+.journal-header{background:#fff;padding:14px 20px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between}
+.journal-title{font-size:0.88rem;font-weight:700;color:var(--blue)}
+.journal-proj{font-size:0.72rem;color:var(--muted)}
+.journal-body{flex:1;padding:16px 20px;display:flex;flex-direction:column;gap:14px;overflow-y:auto}
+.journal-entry{display:flex;gap:12px;align-items:flex-start}
+.je-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;color:#fff;flex-shrink:0}
+.je-body{flex:1;background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:12px 14px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.je-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.je-date{font-size:0.68rem;color:var(--muted)}
+.je-author{font-size:0.75rem;font-weight:700;color:var(--blue)}
+.je-text{font-size:0.78rem;color:var(--text);line-height:1.6}
+.je-tag{display:inline-flex;align-items:center;gap:4px;font-size:0.62rem;font-weight:600;padding:2px 8px;border-radius:100px;margin-top:6px}
+.jet-blue{background:rgba(37,99,235,0.1);color:#2563eb}
+.jet-green{background:rgba(16,185,129,0.1);color:#059669}
+.jet-orange{background:rgba(249,115,22,0.1);color:#c2410c}
+.journal-input{padding:12px 16px;background:#fff;border-top:1px solid #e5e7eb;display:flex;gap:10px;align-items:center}
+.ji-field{flex:1;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:10px;padding:10px 14px;font-size:0.78rem;font-family:'Inter',sans-serif;color:var(--muted);outline:none}
+.ji-btn{background:var(--orange);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+
+/* âââ CTA âââ */
+.cta-section{padding:120px 32px;text-align:center;background:linear-gradient(135deg,#1e3a5f 0%,#2d5490 100%);position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(249,115,22,0.15) 0%,transparent 70%);pointer-events:none}
+.cta-eyebrow{display:inline-block;background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);color:#f97316;font-size:0.8rem;font-weight:700;padding:5px 16px;border-radius:100px;margin-bottom:24px;letter-spacing:0.05em}
+.cta-section h2{font-size:clamp(2rem,4vw,3rem);font-weight:900;color:#fff;letter-spacing:-0.04em;margin-bottom:16px}
+.cta-section p{font-size:1.05rem;color:rgba(255,255,255,0.65);max-width:480px;margin:0 auto 40px;line-height:1.7}
+.cta-buttons{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.cta-btn-primary{background:#f97316;color:#fff;text-decoration:none;font-size:0.95rem;font-weight:700;padding:16px 32px;border-radius:12px;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(249,115,22,0.35)}
+.cta-btn-primary:hover{background:#ea6c0a;transform:translateY(-2px);box-shadow:0 12px 32px rgba(249,115,22,0.45)}
+.cta-btn-secondary{background:rgba(255,255,255,0.1);color:#fff;text-decoration:none;font-size:0.95rem;font-weight:700;padding:16px 32px;border-radius:12px;border:1px solid rgba(255,255,255,0.25);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+.cta-btn-secondary:hover{background:rgba(255,255,255,0.18);transform:translateY(-2px)}
+
+/* âââ FOOTER âââ */
+footer{background:#0f172a;padding:32px;text-align:center;font-size:0.82rem;color:rgba(255,255,255,0.35)}
+footer span{color:rgba(255,255,255,0.55);font-weight:600}
+
+/* âââ ANIMATIONS âââ */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.fade-in-left{opacity:0;transform:translateX(-30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-in-left.visible{opacity:1;transform:translateX(0)}
+.fade-in-right{opacity:0;transform:translateX(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-in-right.visible{opacity:1;transform:translateX(0)}
+
+/* âââ RESPONSIVE âââ */
+@media(max-width:900px){
+.section-inner{grid-template-columns:1fr;gap:40px}
+.section-inner.reverse{direction:ltr}
+.sidebar{width:160px}
+.fin-table th,.fin-table td{padding:6px 8px;font-size:0.68rem}
+}
+@media(max-width:600px){
+.tour-section{padding:80px 16px}
+.kpi-grid{grid-template-columns:1fr 1fr}
+.dashboard-wrap{flex-direction:column}
+.sidebar{width:100%;flex-direction:row;height:48px;overflow-x:auto;padding:0 8px}
+.sidebar-nav{flex-direction:row;padding:0}
+.sidebar-logo{padding:0 16px;border-right:1px solid rgba(255,255,255,0.08)}
+.snav-item{padding:8px}
+.snav-item span:not(.snav-icon){display:none}
+.pg-head,.pg-row{grid-template-columns:70px repeat(5,1fr)}
+.cta-section{padding:80px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- âââ NAV âââ -->
+<nav id="main-nav">
+  <div class="nav-brand"><span class="nav-brand-dot"></span>BE Pilot â Product Tour</div>
+  <div class="nav-steps">
+    <a href="#screen1" class="nav-btn" data-step="1">1</a>
+    <a href="#screen2" class="nav-btn" data-step="2">2</a>
+    <a href="#screen3" class="nav-btn" data-step="3">3</a>
+    <a href="#screen4" class="nav-btn" data-step="4">4</a>
+    <a href="#screen5" class="nav-btn" data-step="5">5</a>
+    <a href="#screen6" class="nav-btn" data-step="6">6</a>
+  </div>
+</nav>
+
+<!-- âââ HERO âââ -->
+<section class="hero" id="hero">
+  <div class="hero-badge"><span class="hero-badge-dot"></span>DÃ©mo interactive</div>
+  <h1>DÃ©couvrez <span>BE Pilot</span><br>en action</h1>
+  <p class="hero-sub">Ragueneau Cuisines Pro â voici comment l'application centralise, pilote et optimise tous vos projets d'installation de cuisines professionnelles.</p>
+  <div class="hero-client">
+    <div class="hero-client-avatar">RC</div>
+    <div class="hero-client-info">
+      <div class="hero-client-name">Ragueneau Cuisines Pro</div>
+      <div class="hero-client-role">Tour produit personnalisÃ© Â· 6 Ã©crans</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div style="font-size:0.75rem;color:#9ca3af">DÃ©couvrir</div>
+    <div class="hero-scroll-arrow">â</div>
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââ
+     SCREEN 1 â Dashboard principal
+ââââââââââââââââââââââââââââââââââââââââââ -->
+<section class="tour-section" id="screen1">
+  <div class="section-number">01</div>
+  <div class="section-inner">
+
+    <!-- MOCKUP -->
+    <div class="app-window fade-in-left">
+      <div class="window-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="window-bar-title">BE Pilot â Dashboard</div>
+      </div>
+      <div class="dashboard-wrap">
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">BP</div>
+            <span>BE Pilot</span>
+          </div>
+          <nav class="sidebar-nav">
+            <div class="snav-item active"><span class="snav-icon">â¬¡</span><span>Projets</span></div>
+            <div class="snav-item"><span class="snav-icon">ð</span><span>Planning</span></div>
+            <div class="snav-item"><span class="snav-icon">ð§</span><span>SAV</span></div>
+            <div class="snav-item"><span class="snav-icon">ð</span><span>Documents</span></div>
+            <div class="snav-item"><span class="snav-icon">ð</span><span>Rapports</span></div>
+          </nav>
+        </div>
+        <!-- Main -->
+        <div class="dash-main">
+          <div class="dash-header">
+            <div class="dash-title">Tableau de bord</div>
+            <div class="dash-date">FÃ©v 2024</div>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-label">Projets actifs</div>
+              <div class="kpi-value">5</div>
+              <div class="kpi-sub">â 2 ce mois</div>
+            </div>
+            <div class="kpi-card green">
+              <div class="kpi-label">Livraisons</div>
+              <div class="kpi-value">2</div>
+              <div class="kpi-sub">Ce mois</div>
+            </div>
+            <div class="kpi-card yellow">
+              <div class="kpi-label">Alertes</div>
+              <div class="kpi-value">1</div>
+              <div class="kpi-sub">Maintenance</div>
+            </div>
+            <div class="kpi-card orange">
+              <div class="kpi-label">CA en cours</div>
+              <div class="kpi-value">489Kâ¬</div>
+              <div class="kpi-sub">3 affaires</div>
+            </div>
+          </div>
+          <div class="proj-list-title">Projets en cours</div>
+          <div class="proj-row">
+            <div class="proj-name">BNP Paribas â RÃ©fectoire</div>
+            <div class="proj-bar-wrap"><div class="proj-bar" style="width:100%;background:#10b981"></div></div>
+            <div class="proj-pct">100%</div>
+          </div>
+          <div class="proj-row">
+            <div class="proj-name">CollÃ¨ge Jean Moulin</div>
+            <div class="proj-bar-wrap"><div class="proj-bar" style="width:65%;background:#3b82f6"></div></div>
+            <div class="proj-pct">65%</div>
+          </div>
+          <div class="proj-row">
+            <div class="proj-name">EHPAD Vincennes</div>
+            <div class="proj-bar-wrap"><div class="proj-bar" style="width:30%;background:#f97316"></div></div>
+            <div class="proj-pct">30%</div>
+          </div>
+          <div class="proj-row">
+            <div class="proj-name">Mairie Paris 15e</div>
+            <div class="proj-bar-wrap"><div class="proj-bar" style="width:15%;background:#8b5cf6"></div></div>
+            <div class="proj-pct">15%</div>
+          </div>
+          <div class="alert-banner">
+            <div class="alert-icon">â ï¸</div>
+            <div class="alert-text">Maintenance prÃ©ventive CERFA â Groupe scolaire Pasteur</div>
+            <div class="alert-badge">45 jours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPLANATION -->
+    <div class="explanation fade-in-right">
+      <div class="screen-tag">Ãcran 01</div>
+      <h2>Vision consolidÃ©e de tous vos chantiers</h2>
+      <p>En un coup d'Åil, votre tableau de bord regroupe l'Ã©tat de tous vos projets, vos indicateurs clÃ©s et vos alertes prioritaires. Plus besoin de croiser 3 fichiers Excel ou d'appeler chaque chef de chantier.</p>
+      <ul class="feature-list">
+        <li>4 KPI en temps rÃ©el : projets actifs, livraisons, alertes, CA en cours</li>
+        <li>Barres de progression par projet, mises Ã  jour automatiquement</li>
+        <li>Alertes rÃ©glementaires visibles dÃ¨s la connexion</li>
+        <li>Navigation instantanÃ©e vers Planning, SAV, Documents et Rapports</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââ
+     SCREEN 2 â Fiche projet dÃ©taillÃ©e
+ââââââââââââââââââââââââââââââââââââââââââ -->
+<section class="tour-section" id="screen2">
+  <div class="section-number">02</div>
+  <div class="section-inner reverse">
+
+    <!-- EXPLANATION -->
+    <div class="explanation fade-in-left">
+      <div class="screen-tag">Ãcran 02</div>
+      <h2>Chaque projet, de l'Ã©tude Ã  la rÃ©ception</h2>
+      <p>La fiche projet centralise tout : avancement, planning, budget, documents et journal. Toutes vos Ã©quipes voient la mÃªme information, en temps rÃ©el, sans version contradictoire.</p>
+      <ul class="feature-list">
+        <li>Statut, budget et progression d'un coup d'Åil</li>
+        <li>TÃ¢ches avec responsable, Ã©chÃ©ance et Ã©tat d'avancement</li>
+        <li>Onglets dÃ©diÃ©s : Planning, Financier, Documents, Journal</li>
+        <li>Partage instantanÃ© avec le client ou le conducteur de travaux</li>
+      </ul>
+    </div>
+
+    <!-- MOCKUP -->
+    <div class="app-window fade-in-right">
+      <div class="window-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="window-bar-title">Fiche Projet</div>
+      </div>
+      <div class="proj-detail-wrap">
+        <div class="proj-detail-header">
+          <div class="pdh-top">
+            <div>
+              <div class="pdh-title">Cuisine centrale â CollÃ¨ge Jean Moulin</div>
+              <div class="pdh-budget" style="margin-top:4px">Budget : 185 000 â¬</div>
+            </div>
+            <span class="badge-green">En cours</span>
+          </div>
+          <div class="tab-bar">
+            <div class="tab active">Vue d'ensemble</div>
+            <div class="tab">Planning</div>
+            <div class="tab">Financier</div>
+            <div class="tab">Documents</div>
+            <div class="tab">Journal</div>
+          </div>
+        </div>
+        <div class="proj-detail-body">
+          <div class="prog-section">
+            <div class="prog-header">
+              <span class="prog-label">Avancement global</span>
+              <span class="prog-pct">65%</span>
+            </div>
+            <div class="prog-bar-outer"><div class="prog-bar-inner" style="width:65%"></div></div>
+          </div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-status ts-done">â</div>
+              <div class="task-name">Visite de chantier & relevÃ©s</div>
+              <div class="task-date">05/01</div>
+              <div class="task-assign">Thomas D.</div>
+            </div>
+            <div class="task-item">
+              <div class="task-status ts-done">â</div>
+              <div class="task-name">Livraison Ã©quipements inox</div>
+              <div class="task-date">22/01</div>
+              <div class="task-assign">Pierre B.</div>
+            </div>
+            <div class="task-item">
+              <div class="task-status ts-done">â</div>
+              <div class="task-name">Installation ligne froide</div>
+              <div class="task-date">31/01</div>
+              <div class="task-assign">Marc L.</div>
+            </div>
+            <div class="task-item">
+              <div class="task-status ts-prog">â</div>
+              <div class="task-name">Montage hottes & ventilation</div>
+              <div class="task-date">15/02</div>
+              <div class="task-assign">Thomas D.</div>
+            </div>
+            <div class="task-item">
+              <div class="task-status ts-wait">â</div>
+              <div class="task-name">Mise en service & formation</div>
+              <div class="task-date">05/03</div>
+              <div class="task-assign">Julie M.</div>
+            </div>
+            <div class="task-item">
+              <div class="task-status ts-wait">â</div>
+              <div class="task-name">RÃ©ception chantier & PV</div>
+              <div class="task-date">20/03</div>
+              <div class="task-assign">Thomas D.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââ
+     SCREEN 3 â Planning techniciens
+ââââââââââââââââââââââââââââââââââââââââââ -->
+<section class="tour-section" id="screen3">
+  <div class="section-number">03</div>
+  <div class="section-inner">
+
+    <!-- MOCKUP -->
+    <div class="app-window fade-in-left">
+      <div class="window-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="window-bar-title">Planning Techniciens â Semaine 07</div>
+      </div>
+      <div class="planning-wrap">
+        <div class="planning-header">
+          <div class="planning-title">Planning hebdomadaire</div>
+          <div class="planning-week">12â16 FÃ©v 2024</div>
+        </div>
+        <div class="planning-grid">
+          <div class="pg-table">
+            <div class="pg-head">
+              <div class="pg-head-cell">Technicien</div>
+              <div class="pg-head-cell">Lun 12</div>
+              <div class="pg-head-cell">Mar 13</div>
+              <div class="pg-head-cell">Mer 14</div>
+              <div class="pg-head-cell">Jeu 15</div>
+              <div class="pg-head-cell">Ven 16</div>
+            </div>
+            <!-- Thomas D. -->
+            <div class="pg-row">
+              <div class="pg-tech">
+                <div class="tech-avatar" style="background:#1e3a5f">TD</div>
+                <div class="tech-name">Thomas D.</div>
+              </div>
+              <div class="pg-cell"><div class="task-block tb-blue">Jean Moulin<br>Montage hottes</div></div>
+              <div class="pg-cell"><div class="task-block tb-blue">Jean Moulin<br>Montage hottes</div></div>
+              <div class="pg-cell"><div class="task-block tb-purple">Mairie 15e<br>Ãtude terrain</div></div>
+              <div class="pg-cell"><div class="task-block tb-blue">Jean Moulin<br>Ventilation</div></div>
+              <div class="pg-cell"></div>
+            </div>
+            <!-- Marc L. -->
+            <div class="pg-row">
+              <div class="pg-tech">
+                <div class="tech-avatar" style="background:#2563eb">ML</div>
+                <div class="tech-name">Marc L.</div>
+              </div>
+              <div class="pg-cell"><div class="task-block tb-green">EHPAD Vincennes<br>Livraison froid</div></div>
+              <div class="pg-cell"><div class="task-block tb-green">EHPAD Vincennes<br>Installation</div></div>
+              <div class="pg-cell"><div class="task-block tb-green">EHPAD Vincennes<br>Installation</div></div>
+              <div class="pg-cell"></div>
+              <div class="pg-cell"><div class="task-block tb-orange">Formation<br>Nouveau matÃ©riel</div></div>
+            </div>
+            <!-- Julie M. -->
+            <div class="pg-row">
+              <div class="pg-tech">
+                <div class="tech-avatar" style="background:#8b5cf6">JM</div>
+                <div class="tech-name">Julie M.</div>
+              </div>
+              <div class="pg-cell"><div class="task-block tb-red">BNP Paribas<br>SAV urgence</div></div>
+              <div class="pg-cell"></div>
+              <div class="pg-cell"><div class="task-block tb-red">SAV Urgence<br>Groupe Pasteur</div></div>
+              <div class="pg-cell"><div class="task-block tb-blue">Jean Moulin<br>Mise en service</div></div>
+              <div class="pg-cell"><div class="task-block tb-blue">Jean Moulin<br>Mise en service</div></div>
+            </div>
+            <!-- Pierre B. -->
+            <div class="pg-row">
+              <div class="pg-tech">
+                <div class="tech-avatar" style="background:#059669">PB</div>
+                <div class="tech-name">Pierre B.</div>
+              </div>
+              <div class="pg-cell"></div>
+              <div class="pg-cell"><div class="task-block tb-purple">Mairie 15e<br>Chiffrage</div></div>
+              <div class="pg-cell"><div class="task-block tb-green">EHPAD Vincennes<br>RÃ©ception BL</div></div>
+              <div class="pg-cell"><div class="task-block tb-green">EHPAD Vincennes<br>Livraison inox</div></div>
+              <div class="pg-cell"><div class="task-block tb-red">Mairie 15e<br>SAV four</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="planning-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>Installation</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>SAV</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Livraison / Maintenance</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Ãtude / Chiffrage</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>Formation</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPLANATION -->
+    <div class="explanation fade-in-right">
+      <div class="screen-tag">Ãcran 03</div>
+      <h2>Qui fait quoi, oÃ¹ et quand</h2>
+      <p>Le planning hebdomadaire vous donne une vision claire de l'occupation de chaque technicien. Affectez, dÃ©placez ou rÃ©organisez en 2 clics. Fini les conflits de planning gÃ©rÃ©s par tÃ©lÃ©phone.</p>
+      <ul class="feature-list">
+        <li>Vue semaine par technicien, code couleur par type de mission</li>
+        <li>DÃ©tection automatique des conflits et doublons</li>
+        <li>Notification push envoyÃ©e au technicien Ã  chaque affectation</li>
+        <li>Synchronisation avec le calendrier mobile du terrain</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââ
+     SCREEN 4 â SAV & Maintenance
+ââââââââââââââââââââââââââââââââââââââââââ -->
+<section class="tour-section" id="screen4">
+  <div class="section-number">04</div>
+  <div class="section-inner reverse">
+
+    <!-- EXPLANATION -->
+    <div class="explanation fade-in-left">
+      <div class="screen-tag">Ãcran 04</div>
+      <h2>Alertes automatiques avant les Ã©chÃ©ances rÃ©glementaires</h2>
+      <p>BE Pilot surveille toutes vos obligations de maintenance et vous alerte avant les dÃ©passements. ZÃ©ro risque d'amende. Chaque Ã©quipement a son historique complet d'interventions.</p>
+      <ul class="feature-list">
+        <li>Alertes CERFA et rÃ©glementaires gÃ©nÃ©rÃ©es automatiquement</li>
+        <li>Historique complet par Ã©quipement (four, groupe froid, hotteâ¦)</li>
+        <li>GÃ©nÃ©ration de rapport d'intervention en 1 clic (PDF)</li>
+        <li>Statut colorÃ© : vert traitÃ©, jaune en attente, rouge urgent</li>
+      </ul>
+    </div>
+
+    <!-- MOCKUP -->
+    <div class="app-window fade-in-right">
+      <div class="window-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="window-bar-title">SAV & Maintenance</div>
+      </div>
+      <div class="sav-wrap">
+        <div class="sav-header">
+          <div class="sav-title">SAV & Maintenance prÃ©ventive</div>
+          <button class="sav-btn">+ Nouvelle intervention</button>
+        </div>
+        <div class="sav-body">
+          <!-- Alert card -->
+          <div class="alert-card-red">
+            <div class="alert-icon-big">ð¨</div>
+            <div class="alert-card-body">
+              <div class="acb-title">ContrÃ´le obligatoire â Fluides frigorigÃ¨nes (CERFA)</div>
+              <div class="acb-sub">Groupe scolaire Pasteur Â· ÃchÃ©ance : 30/04/2024<br>DerniÃ¨re vÃ©rification : 30/04/2023 Â· Intervenant requis : frigoriste certifiÃ©</div>
+              <div class="acb-badge">â± 45 jours restants</div>
+            </div>
+          </div>
+          <!-- Interventions rÃ©centes -->
+          <div class="interv-list">
+            <div class="interv-title">Interventions rÃ©centes</div>
+            <div class="interv-item">
+              <div class="status-dot sd-green"></div>
+              <div class="interv-info">
+                <div class="interv-name">Nettoyage hottes â CollÃ¨ge Jean Moulin</div>
+                <div class="interv-meta">15/01/2024 Â· Julie M. Â· DurÃ©e : 3h Â· ClÃ´turÃ©</div>
+              </div>
+            </div>
+            <div class="interv-item">
+              <div class="status-dot sd-yellow"></div>
+              <div class="interv-info">
+                <div class="interv-name">Panne chambre froide â EHPAD Vincennes</div>
+                <div class="interv-meta">03/02/2024 Â· Marc L. Â· En attente piÃ¨ce</div>
+              </div>
+            </div>
+            <div class="interv-item">
+              <div class="status-dot sd-red"></div>
+              <div class="interv-info">
+                <div class="interv-name">Fuite gaz â BNP Paribas cuisine</div>
+                <div class="interv-meta">12/02/2024 Â· Julie M. Â· Urgent â intervention planifiÃ©e</div>
+              </div>
+            </div>
+          </div>
+          <!-- Equipment card -->
+          <div class="equip-card">
+            <div class="equip-header">
+              <div class="equip-name">Four Rational SCC61</div>
+              <span class="equip-badge">CollÃ¨ge Jean Moulin</span>
+            </div>
+            <div class="equip-meta">
+              InstallÃ© : 12/2021 Â· <strong>3 interventions</strong> Â· DerniÃ¨re visite : 15/09/2023<br>
+              Prochaine maintenance prÃ©ventive : <strong>15/09/2024</strong>
+            </div>
+          </div>
+          <button class="gen-btn">ð GÃ©nÃ©rer rapport d'intervention</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââ
+     SCREEN 5 â Suivi financier
+ââââââââââââââââââââââââââââââââââââââââââ -->
+<section class="tour-section" id="screen5">
+  <div class="section-number">05</div>
+  <div class="section-inner">
+
+    <!-- MOCKUP -->
+    <div class="app-window fade-in-left">
+      <div class="window-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="window-bar-title">Suivi Financier</div>
+      </div>
+      <div class="fin-wrap">
+        <div class="fin-header">
+          <div class="fin-title">Suivi financier â Affaires en cours</div>
+          <span class="badge-blue">FÃ©v 2024</span>
+        </div>
+        <table class="fin-table">
+          <thead>
+            <tr>
+              <th>Affaire</th>
+              <th>MarchÃ©</th>
+              <th>FacturÃ©</th>
+              <th>EncaissÃ© / Restant</th>
+              <th>Marge</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="fin-proj-name">BNP Paribas</td>
+              <td class="fin-amount">210 000 â¬</td>
+              <td class="fin-billed">210 000 â¬</td>
+              <td style="color:#10b981;font-weight:600">â EncaissÃ©</td>
+              <td class="fin-margin margin-green">28%</td>
+              <td class="status-icon">â</td>
+            </tr>
+            <tr>
+              <td class="fin-proj-name">CollÃ¨ge Jean Moulin</td>
+              <td class="fin-amount">185 000 â¬</td>
+              <td class="fin-billed">74 000 â¬</td>
+              <td class="fin-remaining">â» 111 000 â¬</td>
+              <td class="fin-margin margin-ok">24%</td>
+              <td class="status-icon" style="font-size:0.8rem">ð</td>
+            </tr>
+            <tr>
+              <td class="fin-proj-name">EHPAD Vincennes</td>
+              <td class="fin-amount">94 000 â¬</td>
+              <td class="fin-billed">28 200 â¬</td>
+              <td class="fin-remaining">â» 65 800 â¬</td>
+              <td class="fin-margin" style="color:#f59e0b">21%</td>
+              <td class="status-icon" style="font-size:0.8rem">ð</td>
+            </tr>
+            <tr>
+              <td class="fin-proj-name" style="color:#9ca3af">Mairie Paris 15e</td>
+              <td class="fin-amount" style="color:#9ca3af">â â¬</td>
+              <td style="color:#9ca3af">Devis</td>
+              <td style="color:#9ca3af">En attente</td>
+              <td style="color:#9ca3af">â</td>
+              <td class="status-icon">ð</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="fin-footer">
+          <div class="fin-foot-item">
+            <div class="fin-foot-label">CA en cours</div>
+            <div class="fin-foot-val">489 000 â¬</div>
+          </div>
+          <div class="fin-foot-item">
+            <div class="fin-foot-label">EncaissÃ©</div>
+            <div class="fin-foot-val">312 200 â¬</div>
+          </div>
+          <div class="fin-foot-item">
+            <div class="fin-foot-label">Ã facturer</div>
+            <div class="fin-foot-val orange">176 800 â¬</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPLANATION -->
+    <div class="explanation fade-in-right">
+      <div class="screen-tag">Ãcran 05</div>
+      <h2>Vision financiÃ¨re instantanÃ©e sur chaque affaire</h2>
+      <p>Sachez Ã  tout moment oÃ¹ en est chaque affaire financiÃ¨rement : ce qui est facturÃ©, ce qui est encaissÃ©, ce qui reste Ã  facturer et vos marges par projet. Plus de surprise en fin de mois.</p>
+      <ul class="feature-list">
+        <li>Tableau de bord CA en cours, encaissÃ©, Ã  facturer</li>
+        <li>Marge rÃ©elle calculÃ©e automatiquement par affaire</li>
+        <li>Indicateurs visuels : vert soldÃ©, orange en cours, gris devis</li>
+        <li>Export comptable en 1 clic vers votre logiciel de facturation</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââ
+     SCREEN 6 â Journal de chantier
+ââââââââââââââââââââââââââââââââââââââââââ -->
+<section class="tour-section" id="screen6">
+  <div class="section-number">06</div>
+  <div class="section-inner reverse">
+
+    <!-- EXPLANATION -->
+    <div class="explanation fade-in-left">
+      <div class="screen-tag">Ãcran 06</div>
+      <h2>Toute la vie du chantier documentÃ©e</h2>
+      <p>Chaque Ã©quipe laisse sa trace : observations terrain, livraisons, points client, incidents. Le journal de chantier horodatÃ© met fin au "je savais pas" et protÃ¨ge en cas de litige.</p>
+      <ul class="feature-list">
+        <li>Journal chronologique par projet, accessible Ã  toute l'Ã©quipe</li>
+        <li>Ajout de notes, photos et fichiers depuis le terrain (mobile)</li>
+        <li>CatÃ©gorisation : point client, livraison, observation, incident</li>
+        <li>Exportable en PDF pour le client ou le maÃ®tre d'ouvrage</li>
+      </ul>
+    </div>
+
+    <!-- MOCKUP -->
+    <div class="app-window fade-in-right">
+      <div class="window-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="window-bar-title">Journal de chantier â CollÃ¨ge Jean Moulin</div>
+      </div>
+      <div class="journal-wrap">
+        <div class="journal-header">
+          <div class="journal-title">Journal de chantier</div>
+          <div class="journal-proj">CollÃ¨ge Jean Moulin Â· Cuisine centrale</div>
+        </div>
+        <div class="journal-body">
+          <div class="journal-entry">
+            <div class="je-avatar" style="background:#1e3a5f">TD</div>
+            <div class="je-body">
+              <div class="je-meta">
+                <span class="je-date">14/02/2024 Â· 16:42</span>
+                <span class="je-author">Thomas D.</span>
+              </div>
+              <div class="je-text">Point client Conseil DÃ©partemental 94 â validation planning mise en service pour le 5 mars confirmÃ©e par M. Renard. Demande d'ajout d'un extracteur supplÃ©mentaire en zone laverie Ã  chiffrer.</div>
+              <span class="je-tag jet-blue">ð Point client</span>
+            </div>
+          </div>
+          <div class="journal-entry">
+            <div class="je-avatar" style="background:#2563eb">ML</div>
+            <div class="je-body">
+              <div class="je-meta">
+                <span class="je-date">12/02/2024 Â· 09:15</span>
+                <span class="je-author">Marc L.</span>
+              </div>
+              <div class="je-text">Visite terrain â carrelage sol pas encore posÃ© cÃ´tÃ© plonge. Impossible de finir raccordement plomberie avant le 15/02 minimum. PrÃ©venir Thomas et dÃ©caler planning d'une semaine.</div>
+              <span class="je-tag jet-orange">â ï¸ Observation terrain</span>
+            </div>
+          </div>
+          <div class="journal-entry">
+            <div class="je-avatar" style="background:#059669">PB</div>
+            <div class="je-body">
+              <div class="je-meta">
+                <span class="je-date">08/02/2024 Â· 14:30</span>
+                <span class="je-author">Pierre B.</span>
+              </div>
+              <div class="je-text">Livraison Inox conforme au BL â 14 piÃ¨ces rÃ©ceptionnÃ©es, aucun manquant. Stockage en zone sÃ©curisÃ©e local technique. Bon de livraison signÃ© et scannÃ©.</div>
+              <span class="je-tag jet-green">â Livraison conforme</span>
+            </div>
+          </div>
+        </div>
+        <div class="journal-input">
+          <input class="ji-field" type="text" placeholder="Ajouter une note, observation ou point clientâ¦" readonly>
+          <button class="ji-btn">Envoyer</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- âââ CTA âââ -->
+<section class="cta-section" id="cta">
+  <div class="cta-eyebrow">PrÃªt Ã  dÃ©marrer ?</div>
+  <h2>Pilotez vos chantiers<br>comme jamais avant</h2>
+  <p>Rejoignez les Ã©quipes qui ont mis fin aux tableurs et aux pertes d'information sur le terrain.</p>
+  <div class="cta-buttons">
+    <a href="https://suivi-chantiers-be.vercel.app" target="_blank" class="cta-btn-primary">â¶ Voir l'application en direct</a>
+    <a href="mailto:notitiacorp@gmail.com" class="cta-btn-secondary">â Demander une dÃ©mo</a>
+  </div>
+</section>
+
+<!-- âââ FOOTER âââ -->
+<footer>
+  <span>Â© 2024 BE Pilot</span> â Notitia Corp Â· Tous droits rÃ©servÃ©s
+</footer>
+
+<!-- âââ SCRIPTS âââ -->
+<script>
+// IntersectionObserver â nav active step
+const sections = document.querySelectorAll('[id^="screen"]');
+const navBtns = document.querySelectorAll('.nav-btn[data-step]');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id = e.target.id;
+      const step = id.replace('screen','');
+      navBtns.forEach(b=>b.classList.remove('active'));
+      const active = document.querySelector('.nav-btn[data-step="'+step+'"]');
+      if(active) active.classList.add('active');
+    }
+  });
+},{threshold:0.4});
+sections.forEach(s=>io.observe(s));
+
+// IntersectionObserver â fade-in animations
+const fadeEls = document.querySelectorAll('.fade-in,.fade-in-left,.fade-in-right');
+const fadeIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      fadeIO.unobserve(e.target);
+    }
+  });
+},{threshold:0.15});
+fadeEls.forEach(el=>fadeIO.observe(el));
+</script>
+</body>
+</html>
